@@ -8,7 +8,7 @@ class UserController {
     const user = req.body;
     const userDone = await this.userService.create(user);
 
-    return res.status(201).json(userDone);
+    return res.status(201).json({ token: userDone });
   };
 }
 
