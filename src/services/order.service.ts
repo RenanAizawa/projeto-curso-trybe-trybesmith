@@ -2,7 +2,7 @@ import Order from '../interfaces/Order.interface';
 import connection from '../models/connection';
 import OrderModel from '../models/order.model';
 
-class OrderService {
+export default class OrderService {
   public model: OrderModel;
 
   constructor() {
@@ -16,5 +16,3 @@ class OrderService {
     return orders as Order[];
   }
 }
-
-export default OrderService;
