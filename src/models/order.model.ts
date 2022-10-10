@@ -8,16 +8,13 @@ export default class OrderModel {
     this.connection = connection;
   }
 
-  public async getAllO(): Promise<Order[]> {
+  public getAllO = async (): Promise<Order[]> => {
     const [data] = await this.connection.execute<Order[] & RowDataPacket[]>(
-      `SELECT Trybesmith.Orders.id, Trybesmith.Orders.userId, 
-        json_arrayagg(Trybesmith.Products.id) AS productsIds 
-        FROM Trybesmith.Orders 
-        INNER JOIN Trybesmith.Products ON Trybesmith.Products.orderId = Trybesmith.Orders.id 
-        GROUP BY Trybesmith.Orders.id`,
+      `SELECT o.id, o.userId, JSON_ARRAYAGG(p.id) AS productsIds FROM Trybesmith.Orders o
+    INNER JOIN Trybesmith.Products p ON o.id = p.orderId GROUP BY o.id ORDER BY o.id;`,
     );
     console.log('model', data);
     
-    return data;
-  }
+    return data as Order[];
+  };
 }
